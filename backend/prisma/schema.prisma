@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String            @id @default(uuid())
+  name         String
+  email        String            @unique
+  passwordHash String
+  role         String            @default("USER")
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  meters       Meter[]
+  simulations  SavedSimulation[]
+}
+
+model Meter {
+  id              String            @id @default(uuid())
+  userId          String?
+  user            User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isBenchmark     Boolean           @default(false)
+  meterNumber     String?
+  label           String
+  area            String
+  meterType       String            @default("Residential") // "Residential" | "Commercial" | "Mixed"
+  openingBalance  Float
+  currentBalance  Float
+  usualDailyUnits Float
+  rate            Float             // BDT per kWh
+  meterRent       Float             // Monthly/per-recharge meter rent
+  demandCharge    Float             // Demand charge
+  vatRate         Float             @default(0.05)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  history         DayPoint[]
+  recharges       RechargeEvent[]
+  simulations     SavedSimulation[]
+}
+
+model DayPoint {
+  id        String   @id @default(uuid())
+  meterId   String
+  meter     Meter    @relation(fields: [meterId], references: [id], onDelete: Cascade)
+  date      String   // yyyy-MM-dd
+  balance   Float
+  units     Float
+  createdAt DateTime @default(now())
+
+  @@index([meterId, date])
+}
+
+model RechargeEvent {
+  id        String   @id @default(uuid())
+  meterId   String
+  meter     Meter    @relation(fields: [meterId], references: [id], onDelete: Cascade)
+  date      String   // yyyy-MM-dd
+  amount    Float
+  fees      Float    @default(0)
+  vat       Float    @default(0)
+  credit    Float    @default(0)
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@index([meterId, date])
+}
+
+model SavedSimulation {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  meterId       String?
+  meter         Meter?   @relation(fields: [meterId], references: [id], onDelete: SetNull)
+  name          String
+  threshold     Float
+  lowAmount     Float
+  monthlyAmount Float
+  targetDate    String?
+  resultJson    String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

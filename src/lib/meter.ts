@@ -40,7 +40,7 @@ export function runOut(c: MeterCase, dailyUnits: number) {
   return {
     days,
     perDay,
-    date: addDays(parseISO(c.history[c.history.length - 1].date), days),
+    date: addDays(parseISO(c.history[c.history.length - 1]!.date), days),
   };
 }
 
@@ -50,7 +50,7 @@ export function requiredRecharge(
   dailyUnits: number,
   targetISO: string,
 ): CostBreakdown & { days: number } {
-  const last = parseISO(c.history[c.history.length - 1].date);
+  const last = parseISO(c.history[c.history.length - 1]!.date);
   const days = Math.max(0, differenceInCalendarDays(parseISO(targetISO), last));
   const needCredit = Math.max(0, days * dailyEnergyCost(dailyUnits, c.tariff) - currentBalance(c));
   if (needCredit <= 0) return { ...emptyBreakdown(), days };
@@ -119,7 +119,7 @@ export function simulateMonthly(
   monthlyAmount: number,
 ): StrategyResult {
   const perDay = dailyEnergyCost(dailyUnits, c.tariff);
-  const start = parseISO(c.history[c.history.length - 1].date);
+  const start = parseISO(c.history[c.history.length - 1]!.date);
   let balance = currentBalance(c);
   let gross = 0;
   let count = 0;

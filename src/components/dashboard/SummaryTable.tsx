@@ -15,10 +15,10 @@ function SummaryTableInner({ meterCase, dailyUnits, hoveredRecharge }: Props) {
   const ro = runOut(meterCase, dailyUnits);
 
   const rows: [string, string, string, string][] = [
-    ["Opening balance", bdt(s.openingBalance), format(parseISO(meterCase.history[0].date), "d MMM"), "start of record"],
+    ["Opening balance", bdt(s.openingBalance), format(parseISO(meterCase.history[0]!.date), "d MMM"), "start of record"],
     ["Total consumption", `${s.totalUnits.toFixed(0)} units`, `${s.days} days`, `${s.avgDailyUnits.toFixed(1)} /day avg`],
     ["Total recharged", bdt(s.totalRecharged), `${s.days} days`, `${s.rechargeCount} events`],
-    ["Current balance", bdt(s.currentBalance), format(parseISO(meterCase.history[s.days - 1].date), "d MMM"), `${meterCase.meterType} meter`],
+    ["Current balance", bdt(s.currentBalance), format(parseISO(meterCase.history[s.days - 1]!.date), "d MMM"), `${meterCase.meterType} meter`],
     ["Projected run-out", format(ro.date, "d MMM yyyy"), `at ${dailyUnits.toFixed(1)} u/day`, `${ro.days} days`],
   ];
 

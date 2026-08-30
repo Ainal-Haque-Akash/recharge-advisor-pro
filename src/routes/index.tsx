@@ -38,15 +38,15 @@ const defaultsFor = (id: string): StrategyParams => {
 };
 
 function Dashboard() {
-  const [caseId, setCaseId] = useState(CASES[0].id);
+  const [caseId, setCaseId] = useState(CASES[0]!.id);
   const meterCase = useMemo(() => CASES.find((c) => c.id === caseId)!, [caseId]);
 
   const [rangeDays, setRangeDays] = useState(90);
-  const [dailyUnits, setDailyUnits] = useState(CASES[0].usualDailyUnits);
+  const [dailyUnits, setDailyUnits] = useState(CASES[0]!.usualDailyUnits);
   const [targetDate, setTargetDate] = useState(
     format(addDays(parseISO(TODAY), 30), "yyyy-MM-dd"),
   );
-  const [params, setParams] = useState<StrategyParams>(() => defaultsFor(CASES[0].id));
+  const [params, setParams] = useState<StrategyParams>(() => defaultsFor(CASES[0]!.id));
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<{ date: string; amount: number } | null>(null);
 

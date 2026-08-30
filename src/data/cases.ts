@@ -86,13 +86,13 @@ const HISTORY_DAYS = 180;
 
 function buildCase(i: number): MeterCase {
   const r = rng(1000 + i * 77);
-  const meterType = TYPES[i % 3];
+  const meterType = TYPES[i % 3]!;
   const commercialBoost = meterType === "Commercial" ? 2.1 : meterType === "Mixed" ? 1.4 : 1;
   const usualDailyUnits = Math.round((6 + r() * 14) * commercialBoost * 10) / 10;
   const rate = Math.round((6.4 + r() * 4.6) * 100) / 100;
   const tariff: Tariff = {
     rate,
-    meterRent: [40, 45, 60, 85][Math.floor(r() * 4)],
+    meterRent: [40, 45, 60, 85][Math.floor(r() * 4)]!,
     demandCharge: Math.round((25 + r() * 60) / 5) * 5,
     vatRate: 0.05,
   };
@@ -130,7 +130,7 @@ function buildCase(i: number): MeterCase {
   return {
     id: `CASE-${n}`,
     label: `CASE-${n} · ${AREAS[i]}`,
-    area: AREAS[i],
+    area: AREAS[i]!,
     meterType,
     openingBalance,
     usualDailyUnits,

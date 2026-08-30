@@ -159,7 +159,7 @@ function BalanceChartInner({
             <span>{slice[0] && format(parseISO(slice[0].date), "d MMM")}</span>
             <span>Showing last {rangeDays} days</span>
             <span>
-              {slice.length > 0 && format(parseISO(slice[slice.length - 1].date), "d MMM")}
+              {slice.length > 0 && format(parseISO(slice[slice.length - 1]!.date), "d MMM")}
             </span>
           </div>
           <input

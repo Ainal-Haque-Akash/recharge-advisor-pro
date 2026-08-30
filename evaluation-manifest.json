@@ -1,0 +1,32 @@
+{
+  "teamId": "LSH26-T003",
+  "problemId": "P-10",
+  "liveUrl": "https://your-live-url.com",
+  "sourceCode": {
+    "frontend": "https://github.com/Mushfiq17/lsh26-t003-p10/tree/main/frontend",
+    "backend": "https://github.com/Mushfiq17/lsh26-t003-p10/tree/main/backend"
+  },
+  "requirements": [
+    {
+      "id": "req-1",
+      "description": "[Describe the requirement]",
+      "met": true
+    },
+    {
+      "id": "req-2",
+      "description": "[Another requirement]",
+      "met": true
+    }
+    // add all requirements from your problem statement
+  ],
+  "deployment": {
+    "frontend": "Vercel",
+    "backend": "Render"
+  },
+  "technologies": {
+    "frontend": ["React", "Vite"],
+    "backend": ["FastAPI", "Python"],
+    "database": ["Firebase"],
+    "other": ["OpenRouter"]
+  }
+}

@@ -34,3 +34,4 @@ backend/node_modules/
 backend/prisma/dev.db
 backend/prisma/dev.db-journal
 backend/.env
+.vercel
